@@ -42,11 +42,12 @@ import "./peerjs.cfg.js";
     var conn = peer.connect(window.SERVER_PEER_ID);
     // console.info(conn);
     conn.on("open", function () {
-      console.log(root);
+      // console.log(root); // dbg
       root.ws = conn;
     });
     conn.on("data", function (data) {
-      alert(data);
+      console.info("[data]");
+      console.info(data);
       try {
         var msg = JSON.parse(data);
       } catch (error) {
