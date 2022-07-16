@@ -34,18 +34,15 @@ import "./peerjs.cfg.js";
 
   // ===================================
   // console.log(root);
-  var peer = new Peer(undefined, {
-    secure: window.PEERJS_SERVER.secure,
-    host: window.PEERJS_SERVER.host,
-    port: window.PEERJS_SERVER.port,
-    path: window.PEERJS_SERVER.path,
-  });
+  var peer = new Peer(undefined, window.PEERJS_SERVER);
   // console.log(peer.id);
 
   peer.on("open", function (id) {
+    // alert(peer.id);
     var conn = peer.connect(window.SERVER_PEER_ID);
+    // console.info(conn);
     conn.on("open", function () {
-      // console.log(root);
+      console.log(root);
       root.ws = conn;
     });
     conn.on("data", function (data) {
@@ -58,6 +55,36 @@ import "./peerjs.cfg.js";
       }
       window.ws_events[msg.t](msg);
     });
+    // dbg
+    conn.on("error", (e) => {
+      console.log("error");
+      console.error(e);
+    });
+    // dbg
+    conn.on("close", (e) => {
+      console.log("close");
+      console.error(e);
+    });
+    // dbg
+    conn.on("disconnected", () => {
+      console.log("disconnected");
+      console.error(e);
+    });
+  });
+  // dbg
+  peer.on("error", (e) => {
+    console.log("error");
+    console.error(e);
+  });
+  // dbg
+  peer.on("close", (e) => {
+    console.log("close");
+    console.error(e);
+  });
+  // dbg
+  peer.on("disconnected", () => {
+    console.log("disconnected");
+    console.error(e);
   });
   // console.log(this);
   // window.peer = peer;
