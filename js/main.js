@@ -96,7 +96,7 @@ window.get_ws_ip = async () => {
   // first, try using WebSocket directly [if success: we are in debugging mode]
   //       except: fallback to RTC proxy [else: we are in production mode ]
 
-  if (window.CONNECTION_TYPE === "ws") {
+  if (["localhost", "127.0.0.1"].includes(location.hostname)) {
     (function init_ws() {
       root.ws = new WebSocket(`ws://127.0.0.1:${window.ws_port}/`);
       root.ws.onmessage = (event) => {
@@ -104,7 +104,7 @@ window.get_ws_ip = async () => {
       };
       root.ws.onerror = (err) => {};
     })();
-  } else if (window.CONNECTION_TYPE === "rtc") {
+  } else {
     root.useRtcProxy();
   }
 
